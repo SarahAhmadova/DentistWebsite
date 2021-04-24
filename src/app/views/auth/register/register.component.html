@@ -1,0 +1,90 @@
+<div class="container">
+
+  <div class="card o-hidden border-0 shadow-lg my-5">
+    <div class="card-body p-0">
+      <!-- Nested Row within Card Body -->
+      <div class="row">
+        <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+        <div class="col-lg-7">
+          <div class="p-5">
+            <div class="text-center">
+              <h1 class="h4 text-gray-900 mb-4">Yeni hesab yaradın!</h1>
+            </div>
+            <form class="user" (ngSubmit)="submit()" [formGroup]="registerForm">
+              <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input type="text" class="form-control form-control-user" formControlName="name" placeholder="Ad"
+                    [ngClass]="{ 'is-invalid': submitted && f.name.errors }">
+                  <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                    <div *ngIf="f.name.errors.required">Ad boş ola bilməz</div>
+                    <div *ngIf="f.name.errors.maxlength">Ad maksimum 30 simvol ola bilər</div>
+                  </div>
+
+                </div>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control form-control-user" formControlName="surname"
+                    placeholder="Soyad" [ngClass]="{ 'is-invalid': submitted && f.surname.errors }">
+                  <div *ngIf="submitted && f.surname.errors" class="invalid-feedback">
+                    <div *ngIf="f.surname.errors.required">Soyad boş ola bilməz</div>
+                    <div *ngIf="f.surname.errors.maxlength">Soyad maksimum 30 simvol ola bilər</div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <input type="email" class="form-control form-control-user" formControlName="email"
+                  placeholder="E-poçtunuzu daxil edin" [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+                <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                  <div *ngIf="f.email.errors.required">E-poçt boş ola bilməz</div>
+                  <div *ngIf="f.email.errors.email">Düzgün e-poçt daxil edin</div>
+                  <div *ngIf="f.email.errors.maxlength">E-poçt 50 xarakter ola bilər</div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input type="password" class="form-control form-control-user" formControlName="password"
+                    placeholder="Şifrəniz" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+                  <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                    <div *ngIf="f.password.errors.pattern">
+                      Şifrə yetərli gücdə deyil. <br>
+                      Minimum 1 böyük və 1 kiçik hərf <br>
+                      1 rəqəm, 1 simvol olmalıdır
+                    </div>
+                    <div *ngIf="f.password.errors.required">Şifrə boş ola bilməz</div>
+                    <div *ngIf="f.password.errors.minlength">Şifrə mimimum 6 xarakter olmalıdır</div>
+                    <div *ngIf="f.password.errors.maxlength">Şifrə 50 xarakter ola bilər</div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <input type="password" class="form-control form-control-user" placeholder="Şifrəni təkrarlayın"
+                    formControlName='confirmPassword'
+                    [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }">
+                  <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">
+                    <div *ngIf="f.confirmPassword.errors.notsame">Şifrə ilə eyni deyil</div>
+                  </div>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary btn-user btn-block">
+                Qeydiyyatdan keç
+              </button>
+              <!-- <hr>
+                              <a href="index.html" class="btn btn-google btn-user btn-block">
+                                  <i class="fab fa-google fa-fw"></i> Register with Google
+                              </a>
+                              <a href="index.html" class="btn btn-facebook btn-user btn-block">
+                                  <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
+                              </a> -->
+            </form>
+            <hr>
+            <div class="text-center">
+              <a class="small" [routerLink]="['../forget-password']">Şifrəni unutmusan?</a>
+            </div>
+            <div class="text-center">
+              <a class="small" [routerLink]="['../login']">Artıq qeydiyyatdan keçmisən? Daxil ol!</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,50 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-lg-7">
+      <div class="card shadow mb-4">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-primary">Development Approach</h6>
+        </div>
+        <div class="card-body">
+          <p>SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to reduce
+            CSS bloat and poor page performance. Custom CSS classes are used to create
+            custom components and custom utility classes.</p>
+          <p class="mb-0">Before working with this theme, you should become familiar with the
+            Bootstrap framework, especially the utility classes.</p>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-12 col-lg-5">
+      <div class="p-3 rounded shadow-lg mx-3">
+        <h4 class="text-primary">Yeni xidmət əlavə et</h4>
+        <form (ngSubmit)="submit()" >
+          <div class="form-floating mb-3" [formGroup]="serviceForm">
+            <input type="text" class="form-control" formControlName="name" placeholder="Xidmət" [ngClass]="{ 'is-invalid': submitted && f.name.errors }">
+            <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+              <div *ngIf="f.name.errors.required">Xidmət adı boş ola bilməz</div>
+              <div *ngIf="f.name.errors.maxlength">Xidmət adı maksimum 100 simvol ola bilər</div>
+            </div>
+            <label for="name">Xidmət</label>
+          </div>
+          <div class="form-floating mb-3">
+            <textarea class="form-control" formControlName="description" placeholder="Melumat" [ngClass]="{ 'is-invalid': submitted && f.description.errors }"></textarea>
+            <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+              <div *ngIf="f.description.errors.maxlength">Məlumat maksimum 500 simvol ola bilər</div>
+            </div>
+            <label for="description">Məlumat</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" formControlName="phone" placeholder="telefon">
+            <label for="phone">Telefon</label>
+          </div>
+
+          <div class="mb-3">
+            <button type="submit" class="btn btn-outline-primary">Əlavə et</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+

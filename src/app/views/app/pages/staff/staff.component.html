@@ -1,0 +1,87 @@
+<div class="container">
+  <div class="row">
+    <div class="col-7">
+      <div class="card shadow mb-4">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-primary">Development Approach</h6>
+        </div>
+        <div class="card-body">
+          <p>SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to reduce
+            CSS bloat and poor page performance. Custom CSS classes are used to create
+            custom components and custom utility classes.</p>
+          <p class="mb-0">Before working with this theme, you should become familiar with the
+            Bootstrap framework, especially the utility classes.</p>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-5">
+      <div class="p-3 rounded shadow-lg mx-3">
+        <h4 class="text-primary">Yeni işçi əlavə et</h4>
+        <form [formGroup]="staffForm" (ngSubmit)="submit()">
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" formControlName="fullname" placeholder="Fullname"
+              [ngClass]="{ 'is-invalid': submitted && f.fullname.errors }">
+            <div *ngIf="submitted && f.fullname.errors" class="invalid-feedback">
+              <div *ngIf="f.fullname.errors.required">Ad boş ola bilməz</div>
+              <div *ngIf="f.fullname.errors.maxlength">Ad maksimum 70 simvol ola bilər</div>
+            </div>
+            <label for="fullname">Ad, Soyad</label>
+          </div>
+          <div class="mb-3">
+            <select formControlName="position" class="form-select p-3" [ngClass]="{ 'is-invalid': submitted && f.position.errors }">
+              <option [ngValue]="null" disabled selected>Vəzifə</option>
+              <option *ngFor="let pos of positions" [ngValue]="pos.key">
+                {{ pos.val }}
+              </option>
+            </select>
+            <div *ngIf="submitted && f.position.errors" class="invalid-feedback">
+              <div *ngIf="f.position.errors.required">Vəzifə boş ola bilməz</div>
+            </div>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" formControlName="speciality" placeholder="speciality"
+              [ngClass]="{ 'is-invalid': submitted && f.speciality.errors }">
+            <div *ngIf="submitted && f.speciality.errors" class="invalid-feedback">
+              <div *ngIf="f.speciality.errors.required">İxtisas boş ola bilməz</div>
+              <div *ngIf="f.speciality.errors.maxlength">İxtisas maksimum 70 simvol ola bilər</div>
+            </div>
+            <label for="specialization">İxtisas</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" formControlName="phone" placeholder="telefon"
+              [ngClass]="{ 'is-invalid': submitted && f.phone.errors }" maxlength="16" minlength="16">
+            <div *ngIf="submitted && f.phone.errors" class="invalid-feedback">
+              <div *ngIf="f.phone.errors.pattern">
+                Nömrəni düzgün formada daxil edin <br>
+                Məs: (+99450 404 44 44)</div>
+              <div *ngIf="f.phone.errors.minlength">Nömrə 16 simvol ola bilər</div>
+            </div>
+            <label for="phone">Telefon</label>
+          </div>
+
+          <div class="mb-3">
+            <div id="img-file" >
+              <label class="form-control d-flex align-items-center py-4">
+               <input type="file" formControlName="img"/>
+               <span class="fa fa-camera mx-2"></span>
+               <span>Şəkil yüklə</span>
+                </label>
+           </div>
+          </div>
+          <div class="form-floating mb-3">
+            <textarea class="form-control" placeholder="Əlavə qeyd" formControlName="details"
+              [ngClass]="{ 'is-invalid': submitted && f.details.errors }"></textarea>
+            <div *ngIf="submitted && f.details.errors" class="invalid-feedback">
+              <div *ngIf="f.details.errors.maxlength">Qeyd maksimum 70 simvol ola bilər</div>
+            </div>
+            <label for="detail">Əlavə qeyd</label>
+          </div>
+          <div class="mb-3">
+            <button type="submit" class="btn btn-outline-primary">Əlavə et</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
