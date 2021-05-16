@@ -1,0 +1,95 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 d-flex justify-content-end">
+      <button class="btn btn-primary m-3" id="addStaff" (click)="showForm('add',undefined)" data-toggle="modal" data-target="#formModal"><i
+          class="fas fa-user-plus text-light"></i></button>
+    </div>
+  </div>
+
+  <div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="formModalLabel">{{formTitle}}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div id="specForm">
+          <div class="p-3  mx-3">
+            <h4 class="text-primary"> </h4>
+            <form [formGroup]="specForm" (ngSubmit)="submit(formType)" enctype="multipart/form-data">
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" formControlName="name" placeholder="Ad"
+                  [ngClass]="{ 'is-invalid': submitted && f.name.errors }">
+                <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                  <div *ngIf="f.name.errors.required">Ad boş ola bilməz</div>
+                  <div *ngIf="f.name.errors.maxlength">Ad maksimum 100 simvol ola bilər</div>
+                </div>
+                <label for="name">İxtisas</label>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Imtina et</button>
+                <button type="submit" class="btn btn-outline-primary mr-3">{{submitBtn}}</button>
+              </div>
+            </form>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="card shadow m-3 mt-4 row modal-body">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">İxtisas Siyahısı</h6>
+    </div>
+    <form>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col" sortable="id" (sort)="onSort($event)">No#</th>
+            <th scope="col" sortable="name" (sort)="onSort($event)">İxtisas</th>
+            <th scope="col" sortable="createdAt" (sort)="onSort($event)">Yaranma Tarixi</th>
+            <th scope="col">Əməliyyatlar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let spec of specList; index as i">
+            <th scope="row">{{ i + 1 }}</th>
+            <td>
+              <ngb-highlight [result]="spec.name" [term]="service.searchTerm"></ngb-highlight>
+            </td>
+            <td>
+              <ngb-highlight [result]='spec.createdAt | date:"dd.MM.YY"' [term]="service.searchTerm">
+              </ngb-highlight>
+            </td>
+            <th class="btn-group w-100">
+              <button class="btn btn-sm btn-success text-light" (click)="showForm(type.update, spec.id)"
+                data-toggle="modal" data-target="#formModal">
+                <i class="fas fa-edit mr-2"></i>
+                <span>Redaktə et</span>
+              </button>
+              <button class="btn btn-sm btn-danger text-light" (click)="deleteSpec(spec,i)">
+                <i class="fas fa-edit mr-2"></i>
+                <span>Sil</span>
+              </button>
+            </th>
+          </tr>
+        </tbody>
+      </table>
+      <div class="d-flex justify-content-between p-2">
+        <ngb-pagination [collectionSize]="(total$ | async)!" [(page)]="service.page" [pageSize]="service.pageSize">
+        </ngb-pagination>
+
+        <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="service.pageSize">
+          <option [ngValue]="2">2 items per page</option>
+          <option [ngValue]="4">4 items per page</option>
+          <option [ngValue]="6">6 items per page</option>
+        </select>
+      </div>
+    </form>
+
+  </div>

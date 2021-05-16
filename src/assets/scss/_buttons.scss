@@ -23,7 +23,7 @@
   overflow: hidden;
   display: inline-flex;
   align-items: stretch;
-  justify-content: center;
+  justify-content: space-between;
   .icon {
     background: fade-out($black, .85);
     display: inline-block;

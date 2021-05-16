@@ -11,14 +11,21 @@ import { StaffComponent } from './views/app/pages/staff/staff.component';
 import { NotifierModule} from 'angular-notifier';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxDropzoneModule } from 'ngx-dropzone';
+import { FileUploadModule } from 'ng2-file-upload';
+import { NgconfSearchModule } from 'ngconf-search';
+import { SpecialityTableComponent } from './shared/components/speciality-table/speciality-table.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
-    StaffComponent
-  ],
+    StaffComponent,
+    SpecialityTableComponent
+    ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -27,7 +34,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     NotifierModule,
     FormsModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    NgxDropzoneModule,
+    FileUploadModule,
+    NgconfSearchModule,
+    NgbModule
+  ],
+  exports:[
+    SpecialityTableComponent
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}

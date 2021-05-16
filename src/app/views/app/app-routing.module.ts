@@ -1,3 +1,4 @@
+import { SpecialitiesComponent } from './pages/specialities/specialities.component';
 import { ServicesComponent } from './pages/services/services.component';
 import { StaffComponent } from './pages/staff/staff.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
@@ -10,9 +11,10 @@ const routes: Routes = [
   path: "", component: AppComponent,
   children: [
     {path: "", pathMatch: "full",redirectTo: "dashboard"},
-    {path: "dashboard", component: DashboardComponent},
-    {path: "staff", component: StaffComponent},
-    {path: "services", component: ServicesComponent}
+    {path: "esas-sehife", component: DashboardComponent},
+    {path: "isciler", component: StaffComponent},
+    {path: "xidmetler", component: ServicesComponent},
+    {path: "ixtisaslar", component: SpecialitiesComponent}
   ]
 }
 

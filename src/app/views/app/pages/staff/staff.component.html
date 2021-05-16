@@ -1,24 +1,45 @@
 <div class="container">
   <div class="row">
-    <div class="col-7">
-      <div class="card shadow mb-4">
-        <div class="card-header py-3">
-          <h6 class="m-0 font-weight-bold text-primary">Development Approach</h6>
-        </div>
-        <div class="card-body">
-          <p>SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to reduce
-            CSS bloat and poor page performance. Custom CSS classes are used to create
-            custom components and custom utility classes.</p>
-          <p class="mb-0">Before working with this theme, you should become familiar with the
-            Bootstrap framework, especially the utility classes.</p>
+    <div class="col-12 d-flex justify-content-end">
+      <button class="btn btn-primary m-3" id="addStaff" (click)="showForm(true,undefined)"><i
+          class="fas fa-user-plus text-light"></i></button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 staff">
+      <div class="card mb-3" *ngFor="let item of staffList;let i =index">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img [src]='item.imgUrl' *ngIf = "item.imgUrl!=null">
+            <div class="img-filler" *ngIf = "item.imgUrl==null">Şəkil yoxdur</div>
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title m-0 font-weight-bold  d-flex justify-content-between">{{item.fullname}}
+                <span>
+                  <button class="btn btn-sm btn-success text-light mr-2 fas fa-edit"
+                    (click)="showForm(false,item)"></button>
+                  <button class="btn btn-sm btn-danger text-light fas fa-trash-alt"
+                    (click)="deleteStaff(item,i)"></button>
+                </span>
+              </h5>
+              <p>İxtisas: {{item.speciality.name}}</p>
+              <p *ngIf="item.phone">Telefon: {{item.phone}}</p>
+              <p>{{item.description}}</p>
+              <p class="text-right">{{item.createdAt | date:'dd.MM.yyyy'}}</p>
+            </div>
+          </div>
         </div>
       </div>
-
     </div>
-    <div class="col-5">
+
+    <div class="d-none" id="addForm">
       <div class="p-3 rounded shadow-lg mx-3">
-        <h4 class="text-primary">Yeni işçi əlavə et</h4>
-        <form [formGroup]="staffForm" (ngSubmit)="submit()">
+        <h4 class="text-primary d-flex justify-content-between align-items-center">
+          {{formTitle}}
+          <button class="btn btn-sm btn-light text-danger fs-3 fas fa-window-close" (click)="closeForm()"></button>
+        </h4>
+        <form [formGroup]="staffForm" (ngSubmit)="submit(addForm)" enctype="multipart/form-data">
           <div class="form-floating mb-3">
             <input type="text" class="form-control" formControlName="fullname" placeholder="Fullname"
               [ngClass]="{ 'is-invalid': submitted && f.fullname.errors }">
@@ -29,7 +50,8 @@
             <label for="fullname">Ad, Soyad</label>
           </div>
           <div class="mb-3">
-            <select formControlName="position" class="form-select p-3" [ngClass]="{ 'is-invalid': submitted && f.position.errors }">
+            <select formControlName="position" class="form-select p-3"
+              [ngClass]="{ 'is-invalid': submitted && f.position.errors }">
               <option [ngValue]="null" disabled selected>Vəzifə</option>
               <option *ngFor="let pos of positions" [ngValue]="pos.key">
                 {{ pos.val }}
@@ -40,13 +62,16 @@
             </div>
           </div>
           <div class="form-floating mb-3">
-            <input type="text" class="form-control" formControlName="speciality" placeholder="speciality"
-              [ngClass]="{ 'is-invalid': submitted && f.speciality.errors }">
-            <div *ngIf="submitted && f.speciality.errors" class="invalid-feedback">
-              <div *ngIf="f.speciality.errors.required">İxtisas boş ola bilməz</div>
-              <div *ngIf="f.speciality.errors.maxlength">İxtisas maksimum 70 simvol ola bilər</div>
+            <select formControlName="specialization" class="form-select p-3"
+              [ngClass]="{ 'is-invalid': submitted && f.specialization.errors }">
+              <option [ngValue]="null" disabled selected>İxtisas</option>
+              <option *ngFor="let spec of specs" [ngValue]="spec.id">
+                {{ spec.name }}
+              </option>
+            </select>
+            <div *ngIf="submitted && f.specialization.errors" class="invalid-feedback">
+              <div *ngIf="f.specialization.errors.required">İxtisas boş ola bilməz</div>
             </div>
-            <label for="specialization">İxtisas</label>
           </div>
           <div class="form-floating mb-3">
             <input type="text" class="form-control" formControlName="phone" placeholder="telefon"
@@ -61,27 +86,40 @@
           </div>
 
           <div class="mb-3">
-            <div id="img-file" >
+            <div id="img-file">
               <label class="form-control d-flex align-items-center py-4">
-               <input type="file" formControlName="img"/>
-               <span class="fa fa-camera mx-2"></span>
-               <span>Şəkil yüklə</span>
-                </label>
-           </div>
+                <input type="file" (change)="onSelectFile($event)" accept="image/*" formControlName="img" />
+                <span class="fa fa-camera mx-2"></span>
+                <span class="overflow-hidden">{{this.fileName}}</span>
+              </label>
+              <p class="d-none" id="fileProgress">
+                <ngb-progressbar type="success" textType="white" [value]="progressFile" [striped]="true"  [animated]="true">
+                  <span>yuklenir...</span>
+                </ngb-progressbar>
+              </p>
+
+            </div>
+
           </div>
           <div class="form-floating mb-3">
-            <textarea class="form-control" placeholder="Əlavə qeyd" formControlName="details"
-              [ngClass]="{ 'is-invalid': submitted && f.details.errors }"></textarea>
-            <div *ngIf="submitted && f.details.errors" class="invalid-feedback">
-              <div *ngIf="f.details.errors.maxlength">Qeyd maksimum 70 simvol ola bilər</div>
+            <textarea class="form-control" placeholder="Əlavə qeyd" formControlName="description"
+              [ngClass]="{ 'is-invalid': submitted && f.description.errors }"></textarea>
+            <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+              <div *ngIf="f.description.errors.maxlength">Qeyd maksimum 70 simvol ola bilər</div>
             </div>
             <label for="detail">Əlavə qeyd</label>
           </div>
           <div class="mb-3">
-            <button type="submit" class="btn btn-outline-primary">Əlavə et</button>
+            <button type="submit" class="btn btn-outline-primary">{{submitBtn}}</button>
           </div>
         </form>
+
+
       </div>
     </div>
+
+
   </div>
+
+
 </div>

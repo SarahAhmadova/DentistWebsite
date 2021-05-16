@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "../speciality-table/speciality-table.component.scss"
+    ],
+    "names": [],
+    "file": "speciality-table.component.min.css"
+}
