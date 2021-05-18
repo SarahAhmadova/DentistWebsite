@@ -254,7 +254,7 @@ export class StaffComponent implements OnInit {
 
   deleteStaff(staff: any, i: number) {
 
-    let request = confirm('Əminsiniz mi?');
+    let request = confirm('Əminsinizmi?');
     if (!request) return;
 
 

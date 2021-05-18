@@ -1,0 +1,49 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <h3 class="text-primary">Görüşlər</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <table class="table">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Pasient</th>
+          <th scope="col">Əlaqə nömrəsi</th>
+          <th scope="col">Həkim</th>
+          <th scope="col">Xidmət</th>
+          <th scope="col">Vaxt</th>
+          <th scope="col">Tarix</th>
+          <th scope="col">Status</th>
+        </tr>
+
+        <tr *ngFor="let item of appoints; index as i" >
+          <th scope="row">{{i+1}}</th>
+          <td>{{item.patient}}</td>
+          <td>{{item.phone}}</td>
+          <td></td>
+          <td>{{item.service}}</td>
+          <td>{{item.time}}</td>
+          <td>{{item.date|date: "dd MMM, yy"}}</td>
+          <td><div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id={{item.id}}>
+            <label class="custom-control-label" for={{item.id}}></label>
+          </div></td>
+        </tr>
+      </table>
+      <div class="d-flex justify-content-between p-2">
+        <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize"
+          (pageChange)="refreshAppointments()">
+        </ngb-pagination>
+
+        <select class="custom-select" style="width: auto" [(ngModel)]="pageSize"
+          (ngModelChange)="refreshAppointments()">
+          <option [ngValue]="2">2 məlumatla səhifələ</option>
+          <option [ngValue]="4">4 məlumatla səhifələ</option>
+          <option [ngValue]="6">6 məlumatla səhifələ</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>

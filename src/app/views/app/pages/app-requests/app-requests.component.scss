@@ -1,0 +1,65 @@
+.time-selector {
+
+  display: none;
+  padding: 5px;
+  background-color: rgb(168, 198, 255);
+  margin-top: 8px;
+  .show-time{
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    background-color: #fff;
+    border-radius: 5px;
+    margin-bottom: 8px;
+  }
+  .set-box{
+    button{
+      margin-left: 155px;
+      background-color: #0066ff;
+      color: #fff;
+      border-radius: 4px;
+      font-size: 18px;
+      padding: 3px 7px;
+      border: none;
+      outline: none;
+    }
+  }
+  .h-row,
+  .m-row {
+    button {
+      outline: none;
+      border: none;
+      width: 32px;
+      text-align: center;
+      display: inline-block;
+      background-color: #fff;
+      color: #0066ff;
+      padding: 7px;
+      margin: 3px;
+      font-size: 12px;
+      text-decoration: none;
+
+      &:hover {
+        background-color: #0066ff;
+        color: #fff;
+      }
+      &:disabled{
+        background-color: #9497ad;
+        color: #fff;
+      }
+    }
+
+  }
+
+  p.title {
+    margin: 0;
+    font-weight: 700;
+    color: #737368;
+    font-size: 17px;
+  }
+}
+
+
+.time-input {
+  text-align: start;
+}

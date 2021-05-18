@@ -1,0 +1,199 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <h3 class="text-primary">Pasient sorğuları</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <table class="table">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Pasient</th>
+          <th scope="col">Əlaqə nömrəsi</th>
+          <th scope="col">Xidmət</th>
+          <th scope="col">Vaxt</th>
+          <th scope="col">Tarix</th>
+          <th scope="col">Sorğu vaxtı</th>
+          <th scope="col">Status</th>
+        </tr>
+
+        <tr *ngFor="let item of appoints">
+          <th scope="row">{{item.ind}}</th>
+          <td>{{item.patient}}</td>
+          <td>{{item.phone}}</td>
+          <td>{{item.service}}</td>
+          <td>{{item.time}}</td>
+          <td>{{item.date}}</td>
+          <td>{{item.createdAt| date: "HH:mm dd MMM, yy"}}</td>
+          <td>
+            <button class="btn btn-outline-success" *ngIf="!item.accepted" (click)="showForm(item.id)"
+              data-toggle="modal" data-target="#formModal">Görüş əlavə et</button>
+            <p *ngIf="item.accepted">Təsdiq edildi</p>
+          </td>
+        </tr>
+      </table>
+      <div class="d-flex justify-content-between p-2">
+        <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize"
+          (pageChange)="refreshAppointments()">
+        </ngb-pagination>
+
+        <select class="custom-select" style="width: auto" [(ngModel)]="pageSize"
+          (ngModelChange)="refreshAppointments()">
+          <option [ngValue]="2">2 məlumatla səhifələ</option>
+          <option [ngValue]="4">4 məlumatla səhifələ</option>
+          <option [ngValue]="6">6 məlumatla səhifələ</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="formModalLabel">Görüş əlavə et</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div id="appointForm">
+        <div class="p-3  mx-3">
+          <h4 class="text-primary"> </h4>
+          <form [formGroup]="appointmentForm" (ngSubmit)="submit()">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" formControlName="patient"
+                [ngClass]="{ 'is-invalid': submitted && f.patient.errors }">
+              <div *ngIf="submitted && f.patient.errors" class="invalid-feedback">
+                <div *ngIf="f.patient.errors.required">Ad boş ola bilməz</div>
+                <div *ngIf="f.patient.errors.maxlength">Ad maksimum 40 simvol ola bilər</div>
+              </div>
+              <label for="patient">Pasient</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" formControlName="phone"
+                [ngClass]="{ 'is-invalid': submitted && f.phone.errors }">
+              <div *ngIf="submitted && f.phone.errors" class="invalid-feedback">
+                <div *ngIf="f.phone.errors.required">Ad boş ola bilməz</div>
+                <div *ngIf="f.phone.errors.inlength">Ad maksimum 40 simvol ola bilər</div>
+              </div>
+              <label for="phone">Əlaqə nömrəsi</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" formControlName="service"
+                [ngClass]="{ 'is-invalid': submitted && f.service.errors }">
+              <div *ngIf="submitted && f.service.errors" class="invalid-feedback">
+                <div *ngIf="f.service.errors.required">Ad boş ola bilməz</div>
+                <div *ngIf="f.service.errors.maxlength">Ad maksimum 40 simvol ola bilər</div>
+              </div>
+              <label for="service">Xidmət</label>
+            </div>
+            <div class="form-floating mb-3">
+              <select formControlName="doctor" class="form-select p-3"
+                [ngClass]="{ 'is-invalid': submitted && f.doctor.errors }" (change)="select()" id="doctorselect">
+                <option [ngValue]="null" disabled selected>Həkim seçin</option>
+                <option *ngFor="let doctor of doctors" [ngValue]="doctor">
+                  {{ doctor }}
+                </option>
+              </select>
+
+              <div *ngIf="submitted && f.doctor.errors" class="invalid-feedback">
+                <div *ngIf="f.doctor.errors.required">Həkim seçin</div>
+              </div>
+            </div>
+            
+            <div class="form-floating mb-3">
+              <input type="date" class="form-control" formControlName="date"
+                [ngClass]="{ 'is-invalid': submitted && f.date.errors }">
+              <div *ngIf="submitted && f.date.errors" class="invalid-feedback">
+                <div *ngIf="f.date.errors.required">Tarix boş ola bilməz</div>
+              </div>
+              <label for="date">Tarix</label>
+            </div>
+
+
+            <div class="form-floating mb-3">
+              <input type="button"  formControlName="time"
+                [ngClass]="{ 'is-invalid': submitted && f.time.errors }" class="form-control text-start" (click)=(showAvailableTime()) id="timeInput">
+              <div *ngIf="submitted && f.time.errors" class="invalid-feedback">
+                <div *ngIf="f.time.errors.required">Vaxt boş ola bilməz</div>
+              </div>
+              <label for="time">Vaxt</label>
+              <div class="time-selector mdt-2">
+                <div class="show-time"><span>{{this.hour}}:{{this.minute}}</span> <span>X</span></div>
+                <div class="selector-box d-flex">
+                  <div class="hour-box">
+                    <p class="title">Saat</p>
+                    <div class="hours">
+                      <div class="h-row">
+                        <button type="button" (click)="setHour($event)" value="8">8</button>
+                        <button type="button" (click)="setHour($event)" value="9">9</button>
+                        <button type="button" (click)="setHour($event)" value="10">10</button>
+                      </div>
+                      <div class="h-row">
+                        <button type="button" (click)="setHour($event)" value="11">11</button>
+                        <button type="button" (click)="setHour($event)" value="12">12</button>
+                        <button type="button" (click)="setHour($event)" value="13">13</button>
+                      </div>
+                      <div class="h-row">
+                        <button type="button" (click)="setHour($event)" value="14">14</button>
+                        <button type="button" (click)="setHour($event)" value="15">15</button>
+                        <button type="button" (click)="setHour($event)" value="16">16</button>
+                      </div>
+                      <div class="h-row">
+                        <button type="button" (click)="setHour($event)" value="17">17</button>
+                        <button type="button" (click)="setHour($event)" value="18">18</button>
+                        <button type="button" (click)="setHour($event)" value="19">19</button>
+                      </div>
+                      <div class="h-row">
+                        <button type="button" (click)="setHour($event)" value="20">20</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="minute-box ml-2">
+                    <p class="title">Dəqiqə</p>
+                    <div class="minutes">
+                      <div class="m-row">
+                        <button type="button" (click)="setMinute($event)" value="00">00</button>
+                        <button type="button" (click)="setMinute($event)" value="05">05</button>
+                        <button type="button" (click)="setMinute($event)" value="10">10</button>
+                      </div>
+                      <div class="m-row">
+                        <button type="button" (click)="setMinute($event)" value="15">15</button>
+                        <button type="button" (click)="setMinute($event)" value="20">20</button>
+                        <button type="button" (click)="setMinute($event)" value="25">25</button>
+                      </div>
+                      <div class="m-row">
+                        <button type="button" (click)="setMinute($event)" value="30">30</button>
+                        <button type="button" (click)="setMinute($event)" value="35">35</button>
+                        <button type="button" (click)="setMinute($event)" value="40">40</button>
+                      </div>
+                      <div class="m-row">
+                        <button type="button" (click)="setMinute($event)" value="45">45</button>
+                        <button type="button" (click)="setMinute($event)" value="50">50</button>
+                        <button type="button" (click)="setMinute($event)" value="55">55</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="set-box">
+                  <button type="button" (click)="setTime()">Əlavə et</button>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-dark" data-dismiss="modal">İmtina et</button>
+              <button type="submit" class="btn btn-outline-primary mr-3">Təsdiqlə</button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+

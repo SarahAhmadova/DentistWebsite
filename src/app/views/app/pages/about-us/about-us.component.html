@@ -1,0 +1,60 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 mb-5 mt-3 ">
+      <h2 class="text-secondary m-0">Haqqımızda</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <form class="needs-validation">
+        <div class="form-row">
+          <div class="col-md-7 mr-4">
+            <div class="form-row mb-3">
+              <label for="validationCustom01">Başlıq</label>
+              <input type="text" class="form-control" id="validationCustom01" placeholder="Başlıq" value="Mark" required>
+            </div>
+            <div class="form-row mb-3">
+              <div class="mb-3">
+                <div id="img-file">
+                  <!-- <label class="form-control d-flex align-items-center py-4">
+                    <input type="file" (change)="onSelectFile($event)" accept="image/*" formControlName="imgPath" />
+                    <span class="fa fa-camera mx-2"></span>
+                    <span class="overflow-hidden">{{this.fileName}}</span>
+                  </label> -->
+                  
+                  <div *ngIf="submitted && f.imgPath.errors" class="invalid-feedback">
+                    <div *ngIf="f.imgPath.errors.required">Şəkil boş ola bilməz.</div>
+                  </div>
+                </div>
+  
+              </div>
+            </div>
+            <div class="form-row">
+              <label for="validationCustom02">Məzmun mətni</label>
+              <textarea class="form-control"></textarea>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-row mb-3">
+              <label for="validationCustom05">Filial sayı</label>
+            <input type="number" class="form-control" id="validationCustom05" placeholder="Filial sayı" required>
+          
+            </div>
+            <div class="form-row mb-3">
+              <label for="validationCustom05">Pasient sayı</label>
+            <input type="number" class="form-control" id="validationCustom05" placeholder="Pasient sayı" required>
+            
+            </div>
+            <div class="form-row mb-3">
+              <label for="validationCustom05">Həkim sayı</label>
+            <input type="number" class="form-control" id="validationCustom05" placeholder="Həkim sayı" required>
+            
+            </div>
+          </div>
+        </div>
+
+        <button class="btn btn-primary" type="submit">Təsdiqlə</button>
+      </form>
+    </div>
+  </div>
+</div>

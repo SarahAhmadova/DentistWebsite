@@ -1,3 +1,4 @@
+import { AppointmentComponent } from './shared/components/appointment/appointment.component';
 import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -14,7 +15,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { FileUploadModule } from 'ng2-file-upload';
 import { NgconfSearchModule } from 'ngconf-search';
-import { SpecialityTableComponent } from './shared/components/speciality-table/speciality-table.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
@@ -23,8 +23,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   declarations: [
     AppComponent,
     DashboardComponent,
-    StaffComponent,
-    SpecialityTableComponent
+    StaffComponent
     ],
   imports: [
     BrowserModule,
@@ -40,9 +39,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     NgconfSearchModule,
     NgbModule
   ],
-  exports:[
-    SpecialityTableComponent
-  ],
+  exports: [],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
   ],

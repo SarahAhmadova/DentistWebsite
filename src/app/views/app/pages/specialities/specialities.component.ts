@@ -4,17 +4,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { ApiService } from 'src/app/shared/services/api.service';
 import { NotifierService } from 'angular-notifier';
-import { Observable } from 'rxjs';
-import { NgbdSortableHeader, SortEvent } from 'src/app/views/app/pages/specialities/sortable.directive';
-import { specService } from 'src/app/shared/services/specService.service';
-import { DatePipe, DecimalPipe } from '@angular/common';
 
 
 @Component({
   selector: 'app-specialities',
   templateUrl: './specialities.component.html',
-  styleUrls: ['./specialities.component.scss'],
-  providers: [specService, DecimalPipe, DatePipe]
+  styleUrls: ['./specialities.component.scss']
 })
 export class SpecialitiesComponent implements OnInit {
 
@@ -23,13 +18,14 @@ export class SpecialitiesComponent implements OnInit {
   formTitle: string ;
   submitBtn: string ;
   specList: ISpeciality[] = [];
+  specis:any[]=[];
+  collectionSize: number;
+  page = 1;
+  pageSize = 4;
 
-  specs$: Observable<ISpeciality[]>;
-  total$: Observable<number>;
   constructor(private fb: FormBuilder,
     private apiService: ApiService,
-    private notifierService: NotifierService,
-    public service: specService) {
+    private notifierService: NotifierService) {
 
     this.specForm = this.fb.group({
       name: ["", [Validators.maxLength(100), Validators.required]]
@@ -38,29 +34,14 @@ export class SpecialitiesComponent implements OnInit {
     this.apiService.getSpecs().subscribe(
       list => {
         this.specList = list;
-        console.log(list);
-
+        this.collectionSize = list.length;
+        this.refreshAppointments();
       },
       err => {
         notifierService.notify("danger", err);
       }
     )
   }
-
-  @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
-
-  onSort({ column, direction }: SortEvent) {
-    // resetting other headers
-    this.headers.forEach(header => {
-      if (header.sortable !== column) {
-        header.direction = '';
-      }
-    });
-
-    this.service.sortColumn = column;
-    this.service.sortDirection = direction;
-  }
-
 
 
   type: any = {
@@ -74,6 +55,12 @@ export class SpecialitiesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  refreshAppointments() {
+    this.specis = this.specList
+      .map((appointment, i) => ({ ind: i + 1, ...appointment }))
+      .slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
   }
   showForm(typeVal: string, id: number) {
     this.specForm.reset();
@@ -104,6 +91,7 @@ export class SpecialitiesComponent implements OnInit {
   speciality: ISpeciality;
   editSpec: IEditSpec;
   formSpecId:number;
+
   submit(type: string) {
 
     this.submitted = true;
@@ -184,12 +172,8 @@ export class SpecialitiesComponent implements OnInit {
   }
 
   deleteSpec(spec: any, i: number) {
-    console.log();
-
-
     let request = confirm('Əminsinizmi?');
     if (!request) return;
-
 
     this.apiService.deleteSpec(spec.id).subscribe(
       res => {

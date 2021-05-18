@@ -1,11 +1,54 @@
 <div class="container">
-  <div class="row">
-    <div class="col-12 d-flex justify-content-end">
-      <button class="btn btn-primary m-3" id="addStaff" (click)="showForm('add',undefined)" data-toggle="modal" data-target="#formModal"><i
-          class="fas fa-user-plus text-light"></i></button>
+  <div class="card shadow m-3 mt-5 row modal-body">
+    <div class="card-header py-3 d-flex justify-content-between align-items-center">
+      <h2 class="m-0 font-weight-bold text-primary">İxtisas Siyahısı</h2>
+      <button class="btn btn-primary m-3" id="addStaff" (click)="showForm('add',undefined)" data-toggle="modal"
+        data-target="#formModal"><i class="icon-plus mr-1"></i> Yeni ixtisas əlavə et </button>
     </div>
-  </div>
 
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">No#</th>
+          <th scope="col">İxtisas</th>
+          <th scope="col">Yaranma Tarixi</th>
+          <th scope="col">Əməliyyatlar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let spec of specis">
+          <th scope="row">{{ spec.ind}}</th>
+          <td> {{spec.name}} </td>
+          <td> {{spec.createdAt| date: "dd MMM,YYYY"}} </td>
+          <th class="btn-group w-100">
+            <button class="btn btn-sm btn-success text-light" (click)="showForm(type.update, spec.id)"
+              data-toggle="modal" data-target="#formModal">
+              <i class="fas fa-edit mr-2"></i>
+              <span>Redaktə et</span>
+            </button>
+            <button class="btn btn-sm btn-danger text-light" (click)="deleteSpec(spec,i)">
+              <i class="fas fa-edit mr-2"></i>
+              <span>Sil</span>
+            </button>
+          </th>
+        </tr>
+      </tbody>
+    </table>
+    <div class="d-flex justify-content-between p-2">
+      <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize"
+        (pageChange)="refreshAppointments()">
+      </ngb-pagination>
+
+      <select class="custom-select" style="width: auto" [(ngModel)]="pageSize" (ngModelChange)="refreshAppointments()">
+        <option [ngValue]="2">2 məlumatla səhifələ</option>
+        <option [ngValue]="4">4 məlumatla səhifələ</option>
+        <option [ngValue]="6">6 məlumatla səhifələ</option>
+      </select>
+    </div>
+
+  </div>
+ 
+ 
   <div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -40,56 +83,4 @@
 
       </div>
     </div>
-  </div>
-  <div class="card shadow m-3 mt-4 row modal-body">
-    <div class="card-header py-3">
-      <h6 class="m-0 font-weight-bold text-primary">İxtisas Siyahısı</h6>
-    </div>
-    <form>
-
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col" sortable="id" (sort)="onSort($event)">No#</th>
-            <th scope="col" sortable="name" (sort)="onSort($event)">İxtisas</th>
-            <th scope="col" sortable="createdAt" (sort)="onSort($event)">Yaranma Tarixi</th>
-            <th scope="col">Əməliyyatlar</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let spec of specList; index as i">
-            <th scope="row">{{ i + 1 }}</th>
-            <td>
-              <ngb-highlight [result]="spec.name" [term]="service.searchTerm"></ngb-highlight>
-            </td>
-            <td>
-              <ngb-highlight [result]='spec.createdAt | date:"dd.MM.YY"' [term]="service.searchTerm">
-              </ngb-highlight>
-            </td>
-            <th class="btn-group w-100">
-              <button class="btn btn-sm btn-success text-light" (click)="showForm(type.update, spec.id)"
-                data-toggle="modal" data-target="#formModal">
-                <i class="fas fa-edit mr-2"></i>
-                <span>Redaktə et</span>
-              </button>
-              <button class="btn btn-sm btn-danger text-light" (click)="deleteSpec(spec,i)">
-                <i class="fas fa-edit mr-2"></i>
-                <span>Sil</span>
-              </button>
-            </th>
-          </tr>
-        </tbody>
-      </table>
-      <div class="d-flex justify-content-between p-2">
-        <ngb-pagination [collectionSize]="(total$ | async)!" [(page)]="service.page" [pageSize]="service.pageSize">
-        </ngb-pagination>
-
-        <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="service.pageSize">
-          <option [ngValue]="2">2 items per page</option>
-          <option [ngValue]="4">4 items per page</option>
-          <option [ngValue]="6">6 items per page</option>
-        </select>
-      </div>
-    </form>
-
   </div>

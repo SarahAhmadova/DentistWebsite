@@ -25,71 +25,86 @@ export class ApiService {
 
 
   // =================== FILE UPLOAD ===================
-  public uploadFile(file:any){
-    return this.http.post<any>(`${environment.baseUrl}/upload`, file,{ reportProgress: true, observe: 'events' });
+  public uploadFile(file: any) {
+    return this.http.post<any>(`${environment.baseUrl}/upload`, file, { reportProgress: true, observe: 'events' });
   }
 
   // =================== STAFF ===================
   //#region Staff
 
-  public getStaff():Observable<any[]> {
+  public getStaff(): Observable<any[]> {
     return this.http.get<any[]>(`${environment.baseUrl}/staff`);
   }
 
-  public addStaff(data: any):Observable<IStaff> {
+  public addStaff(data: any): Observable<IStaff> {
     return this.http.post<IStaff>(`${environment.baseUrl}/staff`, data)
   }
 
-  public editStaff(id:number,data: any): Observable<any>{
+  public editStaff(id: number, data: any): Observable<any> {
     return this.http.put<any>(`${environment.baseUrl}/staff/${id}`, data)
   }
 
-  public deleteStaff(id: number): Observable<any>{
+  public deleteStaff(id: number): Observable<any> {
     return this.http.delete<any>(`${environment.baseUrl}/staff/${id}`)
   }
 
-//#endregion Staff
+  //#endregion Staff
 
 
   // =================== SPECIALITIES ===================
   //#region Specialities
-  public getSpec(id:number):Observable<ISpeciality> {
+  public getSpec(id: number): Observable<ISpeciality> {
     return this.http.get<ISpeciality>(`${environment.baseUrl}/specialities/${id}`);
   }
 
-  public getSpecs():Observable<ISpeciality[]> {
+  public getSpecs(): Observable<ISpeciality[]> {
     return this.http.get<ISpeciality[]>(`${environment.baseUrl}/specialities`);
   }
 
-  public addSpec(data: any):Observable<ISpeciality> {
+  public addSpec(data: any): Observable<ISpeciality> {
     return this.http.post<ISpeciality>(`${environment.baseUrl}/specialities`, data)
   }
 
-  public editSpec(id:number,data: any): Observable<any>{
+  public editSpec(id: number, data: any): Observable<any> {
     return this.http.put<any>(`${environment.baseUrl}/specialities/${id}`, data)
   }
 
-  public deleteSpec(id: number): Observable<any>{
+  public deleteSpec(id: number): Observable<any> {
     return this.http.delete<any>(`${environment.baseUrl}/specialities/${id}`)
   }
   //#endregion Staff
 
   // =================== SERVICES ===================
   //#region Services
-  public getServices():Observable<any[]> {
+  public getServices(): Observable<any[]> {
     return this.http.get<any[]>(`${environment.baseUrl}/services`);
   }
-  public addService(data : any):Observable<any>{
-    return this.http.post<any>(`${environment.baseUrl}/services`,data);
+  public addService(data: any): Observable<any> {
+    return this.http.post<any>(`${environment.baseUrl}/services`, data);
   }
-  public updateService(id:number, data : any):Observable<any>{
-    return this.http.put<any>(`${environment.baseUrl}/services/${id}`,data);
+  public updateService(id: number, data: any): Observable<any> {
+    return this.http.put<any>(`${environment.baseUrl}/services/${id}`, data);
   }
-  public deleteService(id: number): Observable<any>{
+  public deleteService(id: number): Observable<any> {
     return this.http.delete<any>(`${environment.baseUrl}/services/${id}`)
   }
-   //#endregion Services
+  //#endregion
 
-
-
+  // =================== APPOINTMENTS ===================
+  //#region Appointments
+  public getAppointments(): Observable<any[]> {
+    return this.http.get<any[]>(`${environment.baseUrl}/appointment/appointment-requests`);
   }
+  public getBaseAppointments(): Observable<any[]> {
+    return this.http.get<any[]>(`${environment.baseUrl}/appointment`);
+  }
+  public AddBaseAppointment(data:any): Observable<any> {
+    return this.http.post<any>(`${environment.baseUrl}/appointment`,data);
+  }
+
+  //#endregion 
+  // =================== ABOUT US ===================
+  //#region About us
+  
+  ////#endregion
+}
