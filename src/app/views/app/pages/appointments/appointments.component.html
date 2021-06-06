@@ -1,10 +1,14 @@
 <div class="container">
   <div class="row">
     <div class="col-12">
-      <h3 class="text-primary">Görüşlər</h3>
+      <h3 class="text-primary border border-primary p-3 rounded mb-5 mt-3">Görüşlər</h3>
     </div>
   </div>
-  <div class="row">
+  <div class="empty-list text-center mt-3 mb-5" *ngIf="appoints.length==0">
+    <p>Heç bir görüş qeydə alınmayıb.</p>
+  </div>
+ 
+  <div class="row" *ngIf="appoints.length>0">
     <div class="col-12">
       <table class="table">
         <tr>
@@ -46,4 +50,5 @@
       </div>
     </div>
   </div>
+
 </div>

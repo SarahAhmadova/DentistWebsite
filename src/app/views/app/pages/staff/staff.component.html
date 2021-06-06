@@ -6,8 +6,12 @@
           class="fas fa-user-plus text-light"></i></button>
     </div>
   </div>
+
   <div class="row">
     <div class="col-12 staff">
+      <div class="empty-list text-center" *ngIf="staffList.length==0">
+        <p>İşçi siyahısı boşdur. Yeni işçi əlavə edin.</p>
+      </div>
       <div class="card mb-3" *ngFor="let item of staffList;let i =index">
         <div class="row g-0">
           <div class="col-md-4">

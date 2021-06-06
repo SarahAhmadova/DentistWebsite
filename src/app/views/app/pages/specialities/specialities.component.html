@@ -5,8 +5,11 @@
       <button class="btn btn-primary m-3" id="addStaff" (click)="showForm('add',undefined)" data-toggle="modal"
         data-target="#formModal"><i class="icon-plus mr-1"></i> Yeni ixtisas əlavə et </button>
     </div>
-
-    <table class="table">
+    <div class="empty-list text-center mt-5" *ngIf="specis.length==0">
+      <p>İxtisas siyahısı boşdur. Yeni ixtisas əlavə edin.</p>
+    </div>
+    <div *ngIf="specis.length>0">
+        <table class="table">
       <thead>
         <tr>
           <th scope="col">No#</th>
@@ -45,10 +48,12 @@
         <option [ngValue]="6">6 məlumatla səhifələ</option>
       </select>
     </div>
+    </div>
+
 
   </div>
- 
- 
+
+
   <div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">

@@ -1,3 +1,5 @@
+import { AboutUsComponent } from './pages/about-us/about-us.component';
+import { ContactComponent } from './pages/contact/contact.component';
 import { AppointmentComponent } from './../../shared/components/appointment/appointment.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { AppRequestsComponent } from './pages/app-requests/app-requests.component';
@@ -12,6 +14,7 @@ import { AppComponent } from './app.component';
 import { ServicesComponent } from './pages/services/services.component';
 import { SpecialitiesComponent } from './pages/specialities/specialities.component';
 import { AppointmentsComponent } from './pages/appointments/appointments.component';
+import { PhoneMaskDirective } from 'src/app/shared/directives/phonemask.directive';
 
 
 @NgModule({
@@ -21,7 +24,10 @@ import { AppointmentsComponent } from './pages/appointments/appointments.compone
     SpecialitiesComponent,
     AppRequestsComponent,
     AppointmentComponent,
-    AppointmentsComponent
+    AppointmentsComponent,
+    ContactComponent,
+    PhoneMaskDirective,
+    AboutUsComponent
   ],
   imports: [
     CommonModule,

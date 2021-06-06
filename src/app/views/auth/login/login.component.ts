@@ -46,12 +46,15 @@ export class LoginComponent implements OnInit {
       return;
     }
     console.log(this.loginForm.value);
-
+    
     this.apiService.login(this.loginForm.value).subscribe(
       user=>{
         this.user = user;
       },
       err => {
+
+        console.log(err);
+
         switch (err.status) {
           case 400:
             let errors = err.error.errors;

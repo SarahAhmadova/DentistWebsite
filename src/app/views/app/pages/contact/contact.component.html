@@ -1,44 +1,73 @@
 <div class="container">
   <div class="row">
     <div class="col-12 mb-5 mt-3 ">
-      <h2 class="text-secondary m-0">Haqqımızda</h2>
+      <h2 class="text-secondary m-0">Əlaqə</h2>
     </div>
   </div>
   <div class="row">
-    <div class="col-12">
-      <form class="needs-validation">
-        <div class="form-row">
-          <div class="col-md-7 mr-4">
-            <div class="form-row mb-3">
-              <label for="validationCustom01">Başlıq</label>
-              <input type="text" class="form-control" id="validationCustom01" placeholder="Başlıq" value="Mark" required>
-            </div>
-            
-            <div class="form-row">
-              <label for="validationCustom02">Məzmun mətni</label>
-              <textarea class="form-control"></textarea>
-            </div>
+    <div class="col-5 shadow pt-4 rounded" *ngIf="contact">
+      <ul>
+        <li>
+          <div class="text">
+            <h5>Ünvan</h5>
+            <p>{{contact.address}}</p>
           </div>
-          <div class="col-md-4">
-            <div class="form-row mb-3">
-              <label for="validationCustom05">Filial sayı</label>
-            <input type="number" class="form-control" id="validationCustom05" placeholder="Filial sayı" required>
-
-            </div>
-            <div class="form-row mb-3">
-              <label for="validationCustom05">Pasient sayı</label>
-            <input type="number" class="form-control" id="validationCustom05" placeholder="Pasient sayı" required>
-
-            </div>
-            <div class="form-row mb-3">
-              <label for="validationCustom05">Həkim sayı</label>
-            <input type="number" class="form-control" id="validationCustom05" placeholder="Həkim sayı" required>
-
-            </div>
+        </li>
+        <li>
+          <div class="text">
+            <h5>Telefon</h5>
+            <p>Telefon 1: {{contact.phone1}}<br> Telefon 2: {{contact.phone2}}</p>
           </div>
+        </li>
+        <li>
+          <div class="text">
+            <h5>Email</h5>
+            <p>{{contact.email}}</p>
+          </div>
+        </li>
+      </ul>
+      <button class="btn btn-lg w-100 btn-success text-light mr-2 fas fa-edit"
+      (click)="fillForm()">  Yenilə</button>
+    </div>
+    <div class="col-6 offset-1">
+      <form [formGroup]="contactForm"  enctype="multipart/form-data" (ngSubmit)="addData()">
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" formControlName="address" placeholder="Ünvan"
+            [ngClass]="{ 'is-invalid': submitted && f.address.errors }" maxlength="80" minlength="10">
+          <label for="phone">Ünvan</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" formControlName="phone1" placeholder="Telefon"
+            [ngClass]="{ 'is-invalid': submitted && f.phone1.errors }" appPhoneMask>
+          <div *ngIf="submitted && f.phone1.errors" class="invalid-feedback">
+            <div *ngIf="f.phone1.errors.required">Nömrə boş ola bilməz</div>
+            <div *ngIf="f.phone1.errors.minlength">Nömrəni düzgün daxil edin.</div>
+          </div>
+          <label for="phone">Telefon 1</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" formControlName="phone2" placeholder="Telefon"
+            [ngClass]="{ 'is-invalid': submitted && f.phone2.errors }"  appPhoneMask>
+          <div *ngIf="submitted && f.phone2.errors" class="invalid-feedback">
+            <div *ngIf="f.phone2.errors.required">Nömrə boş ola bilməz</div>
+            <div *ngIf="f.phone2.errors.minlength">Nömrəni düzgün daxil edin.</div>
+          </div>
+          <label for="phone">Telefon 2</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="email" class="form-control" formControlName="email" placeholder="email"
+            [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+          <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+            <div *ngIf="f.email.errors.required">E-poçt boş ola bilməz</div>
+            <div *ngIf="f.email.errors.email">Emaili düzgün daxil edin.</div>
+          </div>
+          <label for="email">Email</label>
         </div>
 
-        <button class="btn btn-primary" type="submit">Təsdiqlə</button>
+
+        <div class="mb-3">
+          <button type="submit" class="btn btn-outline-primary">Təsdiqlə</button>
+        </div>
       </form>
     </div>
   </div>

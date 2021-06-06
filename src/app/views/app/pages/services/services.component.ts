@@ -102,7 +102,7 @@ export class ServicesComponent implements OnInit {
         description: service.description
       });
       console.log(service.imgPath);
-      
+
       this.serviceForm.value.imgPath = service.imgPath;
       console.log($(`.icon-option #${service.icon}`));
       $(`.icon-option #${service.icon}`).attr("checked", "true").parent("label").addClass("active");

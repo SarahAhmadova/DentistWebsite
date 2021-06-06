@@ -4,57 +4,100 @@
       <h2 class="text-secondary m-0">Haqqımızda</h2>
     </div>
   </div>
-  <div class="row">
-    <div class="col-12">
-      <form class="needs-validation">
-        <div class="form-row">
-          <div class="col-md-7 mr-4">
-            <div class="form-row mb-3">
-              <label for="validationCustom01">Başlıq</label>
-              <input type="text" class="form-control" id="validationCustom01" placeholder="Başlıq" value="Mark" required>
-            </div>
-            <div class="form-row mb-3">
-              <div class="mb-3">
-                <div id="img-file">
-                  <!-- <label class="form-control d-flex align-items-center py-4">
-                    <input type="file" (change)="onSelectFile($event)" accept="image/*" formControlName="imgPath" />
-                    <span class="fa fa-camera mx-2"></span>
-                    <span class="overflow-hidden">{{this.fileName}}</span>
-                  </label> -->
-                  
-                  <div *ngIf="submitted && f.imgPath.errors" class="invalid-feedback">
-                    <div *ngIf="f.imgPath.errors.required">Şəkil boş ola bilməz.</div>
-                  </div>
-                </div>
-  
-              </div>
-            </div>
-            <div class="form-row">
-              <label for="validationCustom02">Məzmun mətni</label>
-              <textarea class="form-control"></textarea>
-            </div>
+
+  <div class="row mb-5">
+    <div class="col-5  shadow p-4 rounded" *ngIf="!about">
+      <div class="about-image-holder wow fadeInLeft" data-wow-delay="900ms">
+        <!-- <img src="resources/about.jpg" alt="Awesome Image"> -->
+      </div>
+      <div class="inner-content">
+        <div class="sec-title">
+          <h2>Mission and Story About<br> Our Dento</h2>
+        </div>
+        <div class="about-text-holder">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt saepe laudantium similique cum, iste
+          debitis vel quisquam aperiam? Deserunt odit, odio obcaecati dolor adipisci consequuntur! Veniam nisi sunt
+          officiis accusamus?
+          Ut iusto tempora eum laudantium aperiam. Ad qui aperiam, perferendis praesentium inventore aspernatur et
+          incidunt id natus, sit accusantium mollitia dignissimos alias repudiandae! A, eaque minus. Aut inventore
+          voluptas ut!
+          Itaque, minima. Facere, eos, unde rerum dolor laboriosam aperiam cum natus amet consectetur quod facilis fugit
+          quidem molestias, dolore ipsum voluptates exercitationem iusto voluptatum atque pariatur? Impedit esse iure
+          culpa!
+        </div>
+        <div class="my-3 d-flex justify-content-evenly text-center">
+          <div class="shadow p-3 w-25">
+            <h5>Filial</h5>
+            <h6>1</h6>
           </div>
-          <div class="col-md-4">
-            <div class="form-row mb-3">
-              <label for="validationCustom05">Filial sayı</label>
-            <input type="number" class="form-control" id="validationCustom05" placeholder="Filial sayı" required>
-          
-            </div>
-            <div class="form-row mb-3">
-              <label for="validationCustom05">Pasient sayı</label>
-            <input type="number" class="form-control" id="validationCustom05" placeholder="Pasient sayı" required>
-            
-            </div>
-            <div class="form-row mb-3">
-              <label for="validationCustom05">Həkim sayı</label>
-            <input type="number" class="form-control" id="validationCustom05" placeholder="Həkim sayı" required>
-            
+          <div class="shadow p-3 w-25">
+            <h5>Həkim</h5>
+            <h6>4</h6>
+          </div>
+          <div class="shadow p-3 w-25">
+            <h5>Pasient</h5>
+            <h6>5382</h6>
+          </div>
+        </div>
+      </div>
+      <div class="my-3">
+        <button class="btn btn-lg w-100 btn-success text-light mr-2 fas fa-edit" (click)="fillForm()"> Yenilə</button>
+      </div>
+    </div>
+    <div class="col-6" [ngClass]="{'offset-1':about}">
+      <form [formGroup]="aboutForm">
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="title" formControlName="title" placeholder="Başlıq">
+          <label for="title">Başlıq</label>
+        </div>
+
+        <div class="form-floating mb-3">
+          <textarea class="form-control" formControlName="textContent" id="textContentLbl"
+            placeholder="fill"></textarea>
+          <label for="textContentLbl">Məzmun mətni</label>
+        </div>
+
+        <div class="form-floating mb-3">
+          <div class="mb-3">
+
+            <div id="img-file">
+              <label class="form-control d-flex align-items-center py-4">
+                <input type="file" (change)="onSelectFile($event)" accept="image/*" formControlName="imgPath" />
+                <span class="fa fa-camera mx-2"></span>
+                <span class="overflow-hidden">{{this.fileName}}</span>
+              </label>
+              <p class="d-none" id="fileProgress">
+                <ngb-progressbar type="success" textType="white" [value]="progressFile" [striped]="true"
+                  [animated]="true">
+                  <span>yuklenir...</span>
+                </ngb-progressbar>
+              </p>
+
             </div>
           </div>
         </div>
 
-        <button class="btn btn-primary" type="submit">Təsdiqlə</button>
+        <div class="form-floating mb-3">
+          <input type="number" class="form-control" id="branch" placeholder="Filial sayı" formControlName="branchCount">
+          <label for="branch">Filial sayı</label>
+        </div>
+
+        <div class="form-floating mb-3">
+          <input type="number" class="form-control" id="patient" placeholder="Pasient sayı"
+            formControlName="pasientCount">
+          <label for="patinet">Pasient sayı</label>
+        </div>
+
+        <div class="form-floating mb-3">
+          <input type="number" class="form-control" id="doctor" placeholder="Həkim sayı" formControlName="doctorCount">
+          <label for="doctor">Həkim sayı</label>
+        </div>
+
+        <div class="text-end">
+          <button class="btn btn-lg btn-outline-primary w-100" type="submit">Təsdiqlə</button>
+        </div>
       </form>
+
     </div>
   </div>
 </div>

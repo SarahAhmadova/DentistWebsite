@@ -39,7 +39,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     NgconfSearchModule,
     NgbModule
   ],
-  exports: [],
+  exports: [
+    FormsModule,
+    ReactiveFormsModule
+  ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
   ],

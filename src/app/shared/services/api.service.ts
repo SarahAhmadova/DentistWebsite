@@ -15,8 +15,8 @@ export class ApiService {
 
 
   // =================== SIGN IN & SIGN UP ===================
-  public login(data: any): Observable<IUser> {
-    return this.http.post<IUser>(`${environment.baseUrl}/auth/login`, data)
+  public login(data: any): Observable<any> {
+    return this.http.post<any>(`${environment.baseUrl}/auth/login`, data)
   }
 
   public register(data: any): Observable<IUser> {
@@ -49,6 +49,32 @@ export class ApiService {
   }
 
   //#endregion Staff
+
+  // =================== CONTACT ===================
+  //#region Contact
+  public getContact(): Observable<any> {
+    return this.http.get<any>(`${environment.baseUrl}/contact`);
+  }
+  public addContact(data:any) {
+    return this.http.post<any>(`${environment.baseUrl}/contact`,data);
+  }
+  public updateContact(data:any) {
+    return this.http.put<any>(`${environment.baseUrl}/contact/update`,data);
+  }
+  //#endregion Contact
+
+  // =================== ABOUT ===================
+  //#region About
+  public getAbout(): Observable<any> {
+    return this.http.get<any>(`https://localhost:44389/v1.0/about`);
+  }
+  public addAbout(data:any) {
+    return this.http.post<any>(`${environment.baseUrl}/about`,data);
+  }
+  public updateAbout(data:any) {
+    return this.http.put<any>(`${environment.baseUrl}/about`,data);
+  }
+  //#endregion About
 
 
   // =================== SPECIALITIES ===================
@@ -98,13 +124,13 @@ export class ApiService {
   public getBaseAppointments(): Observable<any[]> {
     return this.http.get<any[]>(`${environment.baseUrl}/appointment`);
   }
-  public AddBaseAppointment(data:any): Observable<any> {
-    return this.http.post<any>(`${environment.baseUrl}/appointment`,data);
+  public AddBaseAppointment(data: any): Observable<any> {
+    return this.http.post<any>(`${environment.baseUrl}/appointment`, data);
   }
 
-  //#endregion 
+  //#endregion
   // =================== ABOUT US ===================
   //#region About us
-  
+
   ////#endregion
 }
